@@ -4,12 +4,11 @@ session_start();
 
 include('conexao.php');
 include('funcoes.php');
-include('validalogin.php');
-include('validaadmingerente.php');
+include('validaradmingerente.php');
 
 $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
 $cpf = isset($_POST['cpf']) ? $_POST['cpf'] : '';
-$telefone = isset($_POST['login']) ? $_POST['login'] : '';
+$telefone = isset($_POST['telefone']) ? $_POST['telefone'] : '';
 $login = isset($_POST['login']) ? $_POST['login'] : '';
 $senha = isset($_POST['senha']) ? $_POST['senha'] : '';
 
@@ -22,26 +21,25 @@ $querylogin = mysqli_query($conexao, $selectlogin);
 $dadologin = mysqli_fetch_row($querylogin);
 
 if ($nome <> NULL) {
-	if (($dadocpf == NULL) && ($dadologin == NULL)) {
+	if (($dadocpf == NULL) && ($dadologin == NULL)){
 		$insertusuario = "INSERT INTO usuario (nome, cpf, telefone)
-			VALUES
-			('$nome', '$cpf', '$telefone')";
+		VALUES 
+		('$nome', '$cpf', '$telefone')";
 		$queryusuario = mysqli_query($conexao, $insertusuario);
 
 		$senhacriptografada = criptografar($senha);
 
-		$insertlogin = "INSERT INTO login (cpf, login, senha, nivel)
+		$insertlogin = "INSERT INTO login (cpf, login, senha, nivel) 
 		VALUES
 		('$cpf', '$login', '$senhacriptografada', 3)";
 		$querylogin = mysqli_query($conexao, $insertlogin);
-
 		echo '<script>alert("Usuário cadastrado com sucesso");
-			window.location="adicionar.php";
-			</script>';
+				window.location="addusuario.php";
+				</script>';
 	} else {
-		echo '<script>alert("CPF e/ou Login já cadastrados no sistema");
-			window.location="adicionar.php";
-			</script>';
+		echo '<script>alert("CPF e/ou Login já cadastrados");
+				window.location="addusuario.php";
+				</script>';
 	}
 }
 
@@ -52,18 +50,18 @@ if ($nome <> NULL) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Segurança</title>
+	<title></title>
 </head>
 <body>
 	<center>
 		<h1>Adicionar Usuário</h1>
-		<form id="form-add" action="#" method="POST">
-			Nome: <input type="text" name="nome"><br>
-			CPF: <input type="text" name="cpf"><br>
-			Telefone: <input type="text" name="telefone"><br>
-			Login: <input type="text" name="login"><br>
-			Senha: <input type="password" name="senha"><br>
-			<input type="submit" name="cadastrar" value="Cadastrar">
+		<form id="form-addusuario" action="#" method="POST">
+			Nome: <input type="text" name="nome" required><br>
+			CPF: <input type="text" name="cpf" required><br>
+			Telefone: <input type="text" name="telefone" required><br>
+			Login: <input type="text" name="login" required><br>
+			Senha: <input type="password" name="senha" required><br><br>
+			<input type="submit" name="enviar" value="Enviar">
 		</form>
 	</center>
 </body>

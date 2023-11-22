@@ -1,10 +1,11 @@
 <?php
 
 if(!isset($_SESSION)) {
-    session_start();
+	session_start();
 }
 
 if($_SESSION['nivel'] <> 1) {
-    header('Location: aviso.php');
+	header('Location: aviso.php');
 }
+
 ?>
